@@ -2,14 +2,20 @@
 
 Autonomous multi-agent tech digest system with human approval checkpoints.
 
+### Live Deployments
+*   🌐 **Public Newsletter**: [https://technews-khaki.vercel.app/](https://technews-khaki.vercel.app/)
+*   ⚙️ **Admin Control Panel**: [https://technews-khaki.vercel.app/#/admin](https://technews-khaki.vercel.app/#/admin) (Passcode: `admin123`)
+
+---
+
 TechPulse monitors developer and research signals, filters them, ranks them for novelty, drafts a digest, waits for human approval, and publishes to Markdown, email, and Slack.
 
 ## Interviewer Demo Guide
 
 TechPulse separates the public subscriber interface from the operations control panel. When running locally or viewing a deployment:
 
-*   **Public Portal**: Renders at the root url (e.g., `http://localhost:5173/`).
-*   **Ops Console (Admin)**: Renders at the hash route: [**`http://localhost:5173/#/admin`**](http://localhost:5173/#/admin).
+*   **Public Portal**: Renders at the root url (e.g., `http://localhost:5173/` or [**`https://technews-khaki.vercel.app/`**](https://technews-khaki.vercel.app/)).
+*   **Ops Console (Admin)**: Renders at the hash route: [**`http://localhost:5173/#/admin`**](http://localhost:5173/#/admin) or [**`https://technews-khaki.vercel.app/#/admin`**](https://technews-khaki.vercel.app/#/admin).
 *   **Admin Passcode**: **`admin123`** (customizable via `VITE_ADMIN_PASSWORD` in `frontend/.env.local`).
 
 ---
