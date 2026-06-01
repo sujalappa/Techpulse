@@ -32,7 +32,7 @@ export function Digest({ digests }: Props) {
           </button>
         </div>
 
-        <div className="meta-row">
+        <div className="meta-row main-meta-row">
           <span className="pill">{selectedDigest.items.length} items</span>
           <span className="pill muted">{new Date(selectedDigest.created_at).toLocaleString()}</span>
           {selectedDigest.published_targets.map((target) => (
@@ -83,10 +83,6 @@ export function Digest({ digests }: Props) {
           </article>
         ) : (
           <div className="reader">
-          <div className="reader-intro">
-            <p>{selectedDigest.intro}</p>
-          </div>
-
           <div className="reader-items">
             {selectedDigest.items.map((item, index) => (
               <article className="reader-item" key={item.id}>
