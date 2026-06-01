@@ -4,6 +4,16 @@ Autonomous multi-agent tech digest system with human approval checkpoints.
 
 TechPulse monitors developer and research signals, filters them, ranks them for novelty, drafts a digest, waits for human approval, and publishes to Markdown, email, and Slack.
 
+## Interviewer Demo Guide
+
+TechPulse separates the public subscriber interface from the operations control panel. When running locally or viewing a deployment:
+
+*   **Public Portal**: Renders at the root url (e.g., `http://localhost:5173/`).
+*   **Ops Console (Admin)**: Renders at the hash route: [**`http://localhost:5173/#/admin`**](http://localhost:5173/#/admin).
+*   **Admin Passcode**: **`admin123`** (customizable via `VITE_ADMIN_PASSWORD` in `frontend/.env.local`).
+
+---
+
 ## Architecture
 
 ![Architecture Diagram](docs/techpulse-architecture.svg)
@@ -18,15 +28,13 @@ GET  /api/runs                        -> list run history
 
 ## Pipeline
 
-1. **Discovery** - fetch items from GitHub, Hacker News, blogs, and research sources.
-2. **Deduplication** - remove repeated or near-identical items.
-3. **Topic filtering** - score items for relevance to AI, devtools, OSS, and infrastructure.
-4. **Checkpoint 1** - approve filtered items before deeper analysis.
-5. **Analysis** - summarise, classify, tag, and score novelty.
-6. **Checkpoint 2** - approve ranked items before digest generation.
-7. **Digest generation** - write Markdown and HTML versions.
-8. **Checkpoint 3** - final approval before publishing.
-9. **Publishing** - save Markdown locally and optionally send to Slack/Resend.
+1. **Discovery** - Fetch live tech news concurrently from Hacker News (Firebase), GitHub (Stars search), and Semantic Scholar (academic papers graph).
+2. **Deduplication** - Compare URLs and normalized titles to discard identical articles.
+3. **Relevance Filter** - Score each item against target developer topics.
+4. **Analysis** - Use Firecrawl to extract web page text and run Mistral models via Hugging Face Serverless Inference to generate summaries, stack tags, and novelty scores.
+5. **Digest Drafting** - Generate complete Markdown and formatted HTML newsletter drafts.
+6. **Ops Checkpoint** - consolidated review screen where editors toggle checkboxes to select/exclude items and preview the final layout.
+7. **Publishing** - Output local Markdown files and dispatch distributions to configured Slack webhooks and Resend email campaigns.
 
 ## Core Features
 
@@ -112,11 +120,10 @@ http://localhost:5174
 
 ## Flow
 
-1. Trigger a run from the dashboard.
-2. Approve topic-filtered items.
-3. Approve ranked/summarised items.
-4. Approve the final digest.
-5. The digest is saved locally and optionally sent to Slack/Resend when configured.
+1. Access the Ops Console at `http://localhost:5173/#/admin` using passcode `admin123`.
+2. Click **Run Pipeline** on the dashboard to trigger scraping, analysis, and drafting.
+3. In the Checkpoints tab, toggle checkboxes to select or exclude articles, and review the draft.
+4. Click **Approve & Publish** to finalize and automatically send emails and Slack messages!
 
 ## Environment
 
